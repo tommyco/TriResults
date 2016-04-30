@@ -94,7 +94,11 @@ class Race
     if entrant.validate
       # assign a new unique bib number from the database and save to the database
       entrant.bib = self.next_bib
+      # save new bib number of race to races collection
+      self.save
+      # save entrant object to results collection
       entrant.save
+      # clone race events into entrant
       self.events.each do |event|
         entrant.results.create(:event=>event)
       end
